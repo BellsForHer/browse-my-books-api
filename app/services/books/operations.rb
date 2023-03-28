@@ -1,7 +1,7 @@
 module Books
     module Operations
         def self.new_book(params, current_user)
-            book = current_user.books.new(title: params[:title], sub_title[:sub_title], summary: params[:summary], image_path: image_path[:image_path])
+            book = current_user.books.new(title: params[:title], sub_title: params[:sub_title], summary: params[:summary], image_path: params[:image_path])
             return ServiceContract.success(book) if book.save
             ServiceContract.error(book.errors.full_messages)
         end

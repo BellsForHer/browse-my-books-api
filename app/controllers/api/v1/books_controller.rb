@@ -1,5 +1,5 @@
 module Api
-    module v1
+    module V1
         class BooksController < Api::V1::ApplicationController
             def create
                 result = Books::Operations.new_book(params, @current_user)
