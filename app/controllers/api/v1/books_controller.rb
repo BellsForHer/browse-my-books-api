@@ -1,6 +1,7 @@
 module Api
     module V1
         class BooksController < Api::V1::ApplicationController
+            skip_before_action :authenticate, only: %i[browse]
             def create
                 result = Books::Operations.new_book(params, @current_user)
                 render_error(errors: result.errors.all, status: 400) and return unless result.success?
@@ -11,7 +12,7 @@ module Api
                 render_success(payload: payload)
             end
             def index
-                book = Book.all
+                books = Book.all
                 payload = {
                     books: BookBlueprint.render_as_hash(books),
                     status: 200
@@ -39,6 +40,14 @@ module Api
                 book = Book.find(params[:id])
                 book.destroy
                 render_success(payload: "Book has been deleted!", status: 200)
+            end
+
+            def browse
+                render_success(payload: {suggest: Book.order("RANDOM()").limit(5)}) 
+            end
+
+            def library
+                render_success(payload: payload)
             end
         end
     end

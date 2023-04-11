@@ -10,4 +10,5 @@ class Role < ApplicationRecord
     stringified_role = role.to_s.downcase.underscore
     stringified_role.in?(available_roles)
   end
+  
 end

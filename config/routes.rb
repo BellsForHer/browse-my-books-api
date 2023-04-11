@@ -27,6 +27,10 @@ Rails.application.routes.draw do
         get :me
         post :create
       end
+      namespace :books do
+        get :browse
+        get :library
+      end
       resources :books
     end
       resources :authors
