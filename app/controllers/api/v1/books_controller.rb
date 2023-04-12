@@ -17,7 +17,7 @@ module Api
                     books: BookBlueprint.render_as_hash(books),
                     status: 200
                 }
-                render_success(payload:payload)
+                render_success(payload: payload)
             end
             def show
                 book = Book.find(params[:id])
@@ -25,17 +25,19 @@ module Api
                     book: BookBlueprint.render_as_hash(book),
                     status: 200
                 }
-                render_success(paylod: payload)
+                render_success(payload: payload)
             end
+            
             def update
-                result = Books::Operations.update_book(params, @current_user)
+                result = Books::Operations.update_book(params)
                 render_error(errors: result.errors.all, status: 400) and return unless result.success?
                 payload = {
-                    book: result.payload,
+                    book: BookBlueprint.render_as_hash(result.payload),
                     status: 201
                 }
                 render_success(payload: payload)
             end
+
             def destroy
                 book = Book.find(params[:id])
                 book.destroy

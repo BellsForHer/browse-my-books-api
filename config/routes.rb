@@ -32,7 +32,8 @@ Rails.application.routes.draw do
         get :library
       end
       resources :books
-    end
       resources :authors
+    end
+      
   end
 end

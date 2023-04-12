@@ -1,45 +1,54 @@
 module Api
-    module v1
+    module V1
         class AuthorsController < Api::V1::ApplicationController
+            
             def create
-                result = Authors::Operations.new_author(params, @current_user)
-                render_error(errors: result.errors.all, status: 400) and return unless result.success?
-                payload = {
-                    author: result.payload,
-                    status: 201
-                }
-                render_success(payload: payload)
+                author = Author.new(first_name: params[:author][:first_name], last_name: params[:author][:last_name])
+                if author.save
+                    payload = {
+                      author: AuthorBlueprint.render_as_hash(author),
+                      status: 200
+                    }
+                    render_success(payload: payload)
+                  else
+                    render_error(errors: author.errors.full_messages, status: 400)
+                  end
             end
+
             def index
-                authro = Author.all
+                authors = Author.all
                 payload = {
-                    authors: result.payload,
+                    authors: AuthorBlueprint.render_as_hash(authors),
                     status: 200
                 }
-                render_success(payload:payload)
+                render_success(payload: payload)
             end
             def show
                 author = Author.find(params[:id])
                 payload = {
-                    authors: result.payload,
+                    author: AuthorBlueprint.render_as_hash(author),
                     status: 200
                 }
-                render_success(paylod: payload)
+                render_success(payload: payload)
             end
+            
             def update
-                result = Authors::Operations.update_author(params, @current_user)
+                result = Authors::Operations.update_author(params)
                 render_error(errors: result.errors.all, status: 400) and return unless result.success?
                 payload = {
-                    author: result.payload,
+                    author: AuthorBlueprint.render_as_hash(result.payload),
                     status: 201
                 }
                 render_success(payload: payload)
             end
+
             def destroy
                 author = Author.find(params[:id])
                 author.destroy
                 render_success(payload: "Author has been deleted!", status: 200)
             end
+
+            
         end
     end
 end
