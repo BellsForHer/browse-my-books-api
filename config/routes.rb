@@ -27,12 +27,14 @@ Rails.application.routes.draw do
         get :me
         post :create
       end
+      get '/users/:id', to: "users#show"
       namespace :books do
         get :browse
         get :library
       end
       resources :books
       resources :authors
+      resources :genres
     end
       
   end

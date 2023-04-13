@@ -49,7 +49,7 @@ module Api
             end
 
             def library
-                render_success(payload: payload)
+                render_success(payload:BookBlueprint.render_as_hash(@current_user.books))
             end
         end
     end
