@@ -2,6 +2,7 @@ module Api
     module V1
         class BooksController < Api::V1::ApplicationController
             skip_before_action :authenticate, only: %i[browse]
+
             def create
                 result = Books::Operations.new_book(params, @current_user)
                 render_error(errors: result.errors.all, status: 400) and return unless result.success?
@@ -11,6 +12,7 @@ module Api
                 }
                 render_success(payload: payload)
             end
+            
             def index
                 books = Book.all
                 payload = {
@@ -51,6 +53,17 @@ module Api
             def library
                 render_success(payload:BookBlueprint.render_as_hash(@current_user.books))
             end
+
+            # def create_new
+            #     result = Authors::Operations.author_book(params, @current_user)
+            #     render_error(errors: result.errors.all, status: 400) and return unless result.success?
+            #     payload = {
+            #         book: BookBlueprint.render_as_hash(result.payload),
+            #         author: AuthorBlueprint.render_as_hash (result.payload)
+            #         status: 201
+            #     }
+            #     render_success(payload: payload)
+            # end
         end
     end
 end

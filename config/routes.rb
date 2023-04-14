@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       namespace :books do
         get :browse
         get :library
+        get :create_new
       end
       resources :books
       resources :authors
