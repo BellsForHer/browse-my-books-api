@@ -27,15 +27,14 @@ Rails.application.routes.draw do
         get :me
         post :create
       end
-      get '/users/:id', to: "users#show"
+      get '/users/:username', to: "users#show", constraints: {username: /.*/}
       namespace :books do
         get :browse
         get :library
-        get :create_new
       end
       resources :books
       resources :authors
-      resources :genres
+      resources :categories
     end
       
   end

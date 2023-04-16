@@ -1,7 +1,7 @@
 module Api
     module V1
         class BooksController < Api::V1::ApplicationController
-            skip_before_action :authenticate, only: %i[browse]
+            skip_before_action :authenticate, only: %i[browse show ]
 
             def create
                 result = Books::Operations.new_book(params, @current_user)
@@ -47,7 +47,7 @@ module Api
             end
 
             def browse
-                render_success(payload: {suggest: Book.order("RANDOM()").limit(5)}) 
+                render_success(payload: {suggest: Book.order("RANDOM()").limit(5), categories: Category.all}) 
             end
 
             def library
