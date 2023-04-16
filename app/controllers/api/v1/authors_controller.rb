@@ -1,7 +1,8 @@
 module Api
     module V1
         class AuthorsController < Api::V1::ApplicationController
-            
+            skip_before_action :authenticate, only: %i[index ]
+
             def create
                 author = Author.new(first_name: params[:author][:first_name], last_name: params[:author][:last_name])
                 if author.save

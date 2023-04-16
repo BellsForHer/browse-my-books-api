@@ -1,4 +1,4 @@
 class BookBlueprint < Blueprinter::Base
     identifier :id
-    fields :title, :sub_title, :summary, :image_path, :user
+    fields :title, :summary, :image_path, :user, :authors, :categories
 end
