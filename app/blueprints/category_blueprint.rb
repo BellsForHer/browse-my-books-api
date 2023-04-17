@@ -1,4 +1,4 @@
 class GenreBlueprint < Blueprinter::Base
     identifier :id
-    fields :name, :book
+    fields :name, :books
 end
