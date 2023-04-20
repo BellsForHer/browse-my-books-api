@@ -47,7 +47,7 @@ module Api
             end
 
             def browse
-                render_success(payload: {suggest: Book.order("RANDOM()").limit(5), categories: Category.all}) 
+                render_success(payload: {suggest: Book.order("RANDOM()").limit(5), categories: Category.all, usernames: User.all}) 
             end
 
             def library

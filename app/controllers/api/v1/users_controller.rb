@@ -4,7 +4,7 @@ module Api
   module V1
     # Handles endpoints related to users
     class UsersController < Api::V1::ApplicationController
-      skip_before_action :authenticate, only: %i[login create show]
+      skip_before_action :authenticate, only: %i[login create show browse]
 
       def login
         result = BaseApi::Auth.login(params[:email], params[:password], @ip)
